@@ -1,0 +1,34 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="pphc"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location"
+			value="com/csc/commons/database.properties" />
+	</bean>
+	
+	<bean id="drds"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${DB.DRIVER_CLASS}" />
+		<property name="url" value="${DB.URL}" />
+		<property name="username" value="${DB.USERNAME}" />
+		<property name="password" value="${DB.PASSWORD}" />
+	</bean>
+
+	<bean id="studentDAO" class="com.csc.dao.StudentDAOImpl">
+		<property name="ds" ref="drds" />
+	</bean>
+	<bean id="studentService"
+		class="com.csc.service.StudentServiceImpl">
+		<property name="dao" ref="studentDAO" />
+	</bean>
+	<bean id="studentController"
+		class="com.csc.controller.StudentController">
+		<property name="service" ref="studentService" />
+	</bean>
+	<bean class="com.csc.listner.IOCContainerMonitoringListener" />
+</beans>
+
+
